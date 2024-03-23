@@ -27,7 +27,7 @@ public class AvengerController {
         return ResponseEntity.ok(avengers);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{id}/detail")
     public ResponseEntity<AvengerResp> getAvengerById(@PathVariable Long id) {
         Avenger a = avengerStorage.getAvengerById(id);
         if (a != null)

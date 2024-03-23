@@ -17,7 +17,6 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/v1/avengers")
 public class AvengerController {
 
-    @Autowired
     private AvengerStorage avengerStorage;
 
     @GetMapping

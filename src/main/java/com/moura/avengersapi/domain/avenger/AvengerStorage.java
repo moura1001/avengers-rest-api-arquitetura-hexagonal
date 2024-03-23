@@ -11,5 +11,5 @@ public interface AvengerStorage {
 
     Avenger updateAvenger(Avenger avenger);
 
-    void deleteAvenger(Long id);
+    boolean deleteAvenger(Long id);
 }

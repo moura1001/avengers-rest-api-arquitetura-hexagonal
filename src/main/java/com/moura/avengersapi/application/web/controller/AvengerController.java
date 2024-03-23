@@ -30,7 +30,10 @@ public class AvengerController {
     @GetMapping("/{id}")
     public ResponseEntity<AvengerResp> getAvengerById(@PathVariable Long id) {
         Avenger a = avengerStorage.getAvengerById(id);
-        return ResponseEntity.ok(new AvengerResp(a));
+        if (a != null)
+            return ResponseEntity.ok(new AvengerResp(a));
+        else
+            return (ResponseEntity<AvengerResp>) ResponseEntity.notFound();
     }
 
     @PostMapping
@@ -39,5 +42,25 @@ public class AvengerController {
         return ResponseEntity.created(
                 URI.create("/api/v1/avengers/"+avengerSaved.getId())
         ).body(new AvengerResp(avengerSaved));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<AvengerResp> updateAvenger(
+            @PathVariable Long id,
+            @RequestBody @Valid AvengerReq avenger
+    ) {
+        Avenger avengerUpdated = avengerStorage.updateAvenger(avenger.toEntity(id));
+        if (avengerUpdated != null)
+            return ResponseEntity.accepted().body(new AvengerResp(avengerUpdated));
+        else
+            return (ResponseEntity<AvengerResp>) ResponseEntity.notFound();
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteAvenger(@PathVariable Long id) {
+        if (avengerStorage.deleteAvenger(id))
+            return ResponseEntity.accepted().body("");
+        else
+            return (ResponseEntity<String>) ResponseEntity.notFound();
     }
 }

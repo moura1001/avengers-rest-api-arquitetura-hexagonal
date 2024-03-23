@@ -18,4 +18,14 @@ public record AvengerReq(
                 this.history
         );
     }
+
+    public Avenger toEntity(Long id) {
+        return new Avenger(
+                id,
+                this.nick,
+                this.person,
+                this.description,
+                this.history
+        );
+    }
 }

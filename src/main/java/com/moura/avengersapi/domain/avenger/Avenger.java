@@ -7,6 +7,14 @@ public class Avenger {
     private String description;
     private String history;
 
+    public Avenger(Long id, String nick, String person, String description, String history) {
+        this.id = id;
+        this.nick = nick;
+        this.person = person;
+        this.description = description;
+        this.history = history;
+    }
+
     public Avenger(String nick, String person, String description, String history) {
         this.nick = nick;
         this.person = person;

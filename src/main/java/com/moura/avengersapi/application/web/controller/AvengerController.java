@@ -6,6 +6,7 @@ import com.moura.avengersapi.domain.avenger.Avenger;
 import com.moura.avengersapi.domain.avenger.AvengerStorage;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,6 +18,8 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/v1/avengers")
 public class AvengerController {
 
+    @Autowired
+    @Qualifier("avengerEntityRepositoryStorage")
     private AvengerStorage avengerStorage;
 
     @GetMapping
@@ -37,7 +40,7 @@ public class AvengerController {
 
     @PostMapping
     public ResponseEntity<AvengerResp> createAvenger(@RequestBody @Valid AvengerReq avenger) {
-        Avenger avengerSaved = avengerStorage.createAvenger(avenger.toEntity());
+        Avenger avengerSaved = avengerStorage.createAvenger(avenger.toDomain());
         return ResponseEntity.created(
                 URI.create("/api/v1/avengers/"+avengerSaved.getId())
         ).body(new AvengerResp(avengerSaved));
@@ -48,7 +51,7 @@ public class AvengerController {
             @PathVariable Long id,
             @RequestBody @Valid AvengerReq avenger
     ) {
-        Avenger avengerUpdated = avengerStorage.updateAvenger(avenger.toEntity(id));
+        Avenger avengerUpdated = avengerStorage.updateAvenger(avenger.toDomain(id));
         if (avengerUpdated != null)
             return ResponseEntity.accepted().body(new AvengerResp(avengerUpdated));
         else

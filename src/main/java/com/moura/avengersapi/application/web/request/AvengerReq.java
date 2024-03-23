@@ -10,7 +10,7 @@ public record AvengerReq(
         @NotEmpty @Size(min = 8, max = 512) String description,
         @NotEmpty @Size(min = 8, max = 2048) String history
 ) {
-    public Avenger toEntity() {
+    public Avenger toDomain() {
         return new Avenger(
                 this.nick,
                 this.person,
@@ -19,7 +19,7 @@ public record AvengerReq(
         );
     }
 
-    public Avenger toEntity(Long id) {
+    public Avenger toDomain(Long id) {
         return new Avenger(
                 id,
                 this.nick,
